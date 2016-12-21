@@ -1,25 +1,30 @@
-var greet = require('./greet1');
-greet();
+var Emitter = require('./emitter');
 
-var greet2 = require('./greet2').greet;
-greet2();
+var emtr = new Emitter();
 
-var greet3 = require('./greet3');
-greet3.greet();
-greet3.greeting = "Changed hello world";
+emtr.on('greet',function(){
+  console.log("Somewhere, someone said hello");
+});
 
-var greet3b = require('./greet3');
-greet3b.greet();
+emtr.on('reply',function(){
+  console.log("Hey I am fine!");
+});
 
+emtr.on('greet',function(){
+  console.log("A greeting occurred!");
+});
 
-var Greet4 = require('./greet4');
-var grtr = new Greet4();
-grtr.greet();
-grtr.greeting = "Changed";
+console.log('Hello');
 
-var Greet4b = require('./greet4');
-var grtr1 = new Greet4b();
-grtr1.greet();
+emtr.emit('greet');
 
-var greet5 = require('./greet5').greet;
-greet5();
+emtr.emit('reply');
+
+emtr.on('reply',function(){
+  console.log("Dere?!");
+});
+
+emtr.emit('reply');
+
+console.log('Hello');
+emtr.emit('reply');
