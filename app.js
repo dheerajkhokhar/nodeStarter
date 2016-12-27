@@ -2,11 +2,11 @@ var http = require('http');
 var fs = require('fs');
 
 // create server which takes a call back
+// use stream which will reduce the buffer size.
 http.createServer(function(req,res){
+  // res is a writeable stream.
 
   res.writeHead(200, { 'Content-Type':'text/html' });
-  var html = fs.readFileSync(__dirname+'/index.htm','utf8');
-  var message = "Hello world...";
-  html = html.replace('{Message}',message);
-  res.end(html);
+  fs.createReadStream(__dirname+'/index.htm').pipe(res);
+
 }).listen(1337,'127.0.0.1');
